@@ -5,7 +5,6 @@ from bs4 import BeautifulSoup
 
 import requests
 
-
 def downloadhtml(url):
     page = requests.get(url)
     soup = BeautifulSoup(page.content, 'lxml')
