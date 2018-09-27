@@ -10,11 +10,13 @@ if __name__ == '__main__':
 
     import utils
 
+    url = 'https://www.boxofficemojo.com/yearly/'
+
+    MasterURLs = utils.MasterURLsparser(url)
+
     df = pd.DataFrame()
 
-    li = ['https://www.boxofficemojo.com/movies/?id=scream.htm', 'https://www.boxofficemojo.com/movies/?id=girldragontattoo11.htm']
-
-    for url in li:
+    for url in MasterURLs:
         df = df.append(
             {
                 'Title': utils.titleparser(url)
@@ -23,20 +25,19 @@ if __name__ == '__main__':
                 , 'MPAA Rating': utils.mpaaratingparser(url)
                 , 'Production Budget': utils.productionbudgetparser(url)
                 , 'Release Date': utils.releasedateparser(url)
-                , 'Runtime': utils.domesticparser(url)
+                , 'Runtime': utils.runtimeparser(url)
                 , 'Domestic': utils.domesticparser(url)
                 , 'Foreign': utils.foreignparser(url)
                 , 'Worldwide': utils.worldwideparser(url)
                 , 'Opening Weekend Gross': utils.openingweekendgrossparser(url)
                 , 'Opening Weekend Theaters': utils.openingweekendtheatersparser(url)
                 , 'Widest Theaters': utils.widestreleaseparser(url)
-                , 'Director': utils.directorparser(url)
-                , 'Writer': utils.writerparser(url)
-                , 'Actors': utils.actorparser(url)
-                , 'Producer': utils.producerparser(url)
-                , 'Composer': utils.composerparser(url)
-                , 'Genres': utils.genresparser(url)
+                # , 'Director': directorparser(url)
+                # , 'Writer': writerparser(url)
+                # , 'Actors': actorparser(url)
+                # , 'Producer': producerparser(url)
+                # , 'Composer': composerparser(url)
+                # , 'Genres': utils.genresparser(url)
             }, ignore_index=True
         )
-
-    print(df)
+        print(url)
