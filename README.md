@@ -1,4 +1,4 @@
-# BoxOfficeMojo Python WebScraper
+# BoxOfficeMojo.com Python WebScraper
 
 Web Scraping Package created to archive a BoxOfficeMojo database.
 
