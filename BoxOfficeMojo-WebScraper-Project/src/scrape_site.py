@@ -6,7 +6,7 @@ if __name__ == '__main__':
 
     import pandas as pd
 
-    sys.path.append('/Users/Love/Documents/Projects/BoxOfficeMojo-Python-WebScraper/BoxOfficeMojo-WebScraper-Project/src/utils')
+    # sys.path.append('/Users/Love/Documents/Projects/BoxOfficeMojo-Python-WebScraper/BoxOfficeMojo-WebScraper-Project/src/utils')
 
     import utils
 
@@ -32,12 +32,12 @@ if __name__ == '__main__':
                 , 'Opening Weekend Gross': utils.openingweekendgrossparser(url)
                 , 'Opening Weekend Theaters': utils.openingweekendtheatersparser(url)
                 , 'Widest Theaters': utils.widestreleaseparser(url)
-                # , 'Director': directorparser(url)
-                # , 'Writer': writerparser(url)
-                # , 'Actors': actorparser(url)
-                # , 'Producer': producerparser(url)
-                # , 'Composer': composerparser(url)
-                # , 'Genres': utils.genresparser(url)
+                , 'Director': utils.directorparser(url)
+                , 'Writer': utils.writerparser(url)
+                , 'Actors': utils.actorparser(url)
+                , 'Producer': utils.producerparser(url)
+                , 'Composer': utils.composerparser(url)
+                , 'Genres': utils.genresparser(url)
             }, ignore_index=True
         )
         print(url)
