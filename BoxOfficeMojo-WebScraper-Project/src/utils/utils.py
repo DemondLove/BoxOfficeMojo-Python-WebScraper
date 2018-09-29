@@ -11,19 +11,14 @@ def downloadhtml(url):
         page = requests.get(url)
         if 'Sorry, we\'re not able to process your request.' in BeautifulSoup(page.content, 'lxml').find('div', id='main').find('p'):
             return None
+        elif 'chart' in url:
+            return None
         else:
             soup = BeautifulSoup(page.content, 'lxml')
             return soup
-    except TimeoutError:
-        try:
-            page = requests.get(url)
-            if 'Sorry, we\'re not able to process your request.' in BeautifulSoup(page.content, 'lxml').find('div', id='main').find('p'):
-                return None
-            else:
-                soup = BeautifulSoup(page.content, 'lxml')
-                return soup
-        except TimeoutError:
-            return 'TimeoutError'
+    except Exception as e:
+        soup = e
+        return 'ErrorCode' + ' ' + str(soup)
 
 
 def uppertabledataparser(soup):
@@ -37,28 +32,23 @@ def totallifetimegrossestableparser(soup):
 
 
 def titleparser(url):
-    try:
-        soup = downloadhtml(url)
-        if soup is None:
-            return 'PageMissing' + ' ' + str(url)
-        elif soup == 'TimeoutError':
-            return 'TimeoutError' + ' ' + str(url)
-        else:
-            title = soup.find('div', id='body').find('table', style='padding-top: 5px;').find('b').text
-            return title
-    except AttributeError:
-        while True:
-            try:
-                soup = downloadhtml(url)
-                if soup is None:
-                    return 'PageMissing' + ' ' + str(url)
-                elif soup == 'TimeoutError':
-                    return 'TimeoutError' + ' ' + str(url)
-                else:
-                    title = soup.find('div', id='body').find('table', style='padding-top: 5px;').find('b').text
-                return title
-            except AttributeError:
-                continue
+	try:
+		soup = downloadhtml(url)
+		if soup is None:
+			return 'PageMissing' + ' ' + str(url)
+		elif 'ErrorCode' in soup:
+			return str(soup) + ' ' + str(url)
+		else:
+			title = soup.find('div', id='body').find('table', style='padding-top: 5px;').find('b').text
+			return title
+	except AttributeError:
+		while True:
+			try:
+				soup = downloadhtml(url)
+				title = soup.find('div', id='body').find('table', style='padding-top: 5px;').find('b').text
+				return title
+			except AttributeError:
+				continue
 
 
 def distributorparser(url):
