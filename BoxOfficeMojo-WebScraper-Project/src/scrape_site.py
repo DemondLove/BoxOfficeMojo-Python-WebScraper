@@ -38,6 +38,7 @@ if __name__ == '__main__':
                 , 'Producer': utils.producerparser(url)
                 , 'Composer': utils.composerparser(url)
                 , 'Genres': utils.genresparser(url)
+				, 'URL': str(url)
             }, ignore_index=True
         )
         print(url)
