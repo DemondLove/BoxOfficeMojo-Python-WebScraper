@@ -3,16 +3,20 @@
 
 if __name__ == '__main__':
     import sys
-
+    import os
+    import inspect
+    from imp import reload
     import pandas as pd
 
-    # sys.path.append('/Users/Love/Documents/Projects/BoxOfficeMojo-Python-WebScraper/BoxOfficeMojo-WebScraper-Project/src/utils')
+    filename = inspect.getframeinfo(inspect.currentframe()).filename
+    curpath = os.path.dirname(os.path.abspath(filename))
+    sys.path.insert(0, curpath + '/utils')
 
     import utils
 
-    url = 'https://www.boxofficemojo.com/yearly/'
+    HomeDirectory = 'https://www.boxofficemojo.com/yearly/'
 
-    MasterURLs = utils.MasterURLsparser(url)
+    MasterURLs = utils.MasterURLsparser(HomeDirectory)
 
     df = pd.DataFrame()
 
@@ -32,13 +36,14 @@ if __name__ == '__main__':
                 , 'Opening Weekend Gross': utils.openingweekendgrossparser(url)
                 , 'Opening Weekend Theaters': utils.openingweekendtheatersparser(url)
                 , 'Widest Theaters': utils.widestreleaseparser(url)
-                , 'Director': utils.directorparser(url)
-                , 'Writer': utils.writerparser(url)
-                , 'Actors': utils.actorparser(url)
-                , 'Producer': utils.producerparser(url)
-                , 'Composer': utils.composerparser(url)
+                # , 'Director': utils.directorparser(url)
+                # , 'Writer': utils.writerparser(url)
+                # , 'Actors': utils.actorparser(url)
+                # , 'Producer': utils.producerparser(url)
+                # , 'Composer': utils.composerparser(url)
                 , 'Genres': utils.genresparser(url)
-				, 'URL': str(url)
+                , 'URL': str(url)
             }, ignore_index=True
         )
-        print(url)
+        
+    df.to_csv(curpath + '/data/BoxOfficeMojoDataset.csv')
