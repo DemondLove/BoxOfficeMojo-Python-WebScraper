@@ -1,5 +1,4 @@
-
-# BoxOfficeMojo Python WebScraper Utility Package
+# BoxOfficeMojo Python WebScraper Master Script
 
 if __name__ == '__main__':
     import sys
