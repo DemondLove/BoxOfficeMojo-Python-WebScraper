@@ -133,6 +133,8 @@ def downloadhtml(url):
             return None
         elif 'chart' in url:
             return None
+        elif '..' in url:
+            return None
         else:
             soup = BeautifulSoup(page.content, 'lxml')
             return soup
@@ -701,8 +703,14 @@ def openingweekendtheatersparser(url):
                 if len(li) == 2:
                     k = [None, None]
                 else:
-                    k = li[2].split(', ')
-                return k[1]
+                    try:
+                        k = li[2].split(', ')
+                    except IndexError:
+                        return 'NULL' + ' ' + str(url)
+                try:
+                    return k[1]
+                except IndexError:
+                    return 'NULL' + ' ' + str(url)
             except TypeError:
                 return 'ErrorCode' + ' ' + str(soup)
     except AttributeError:
@@ -726,8 +734,14 @@ def openingweekendtheatersparser(url):
                         if len(li) == 2:
                             k = [None, None]
                         else:
-                            k = li[2].split(', ')
-                        return k[1]
+                            try:
+                                k = li[2].split(', ')
+                            except IndexError:
+                                return 'NULL' + ' ' + str(url)
+                        try:
+                            return k[1]
+                        except IndexError:
+                            return 'NULL' + ' ' + str(url)
                     except TypeError:
                         return 'ErrorCode' + ' ' + str(soup)
             except AttributeError:
