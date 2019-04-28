@@ -21,7 +21,8 @@ if __name__ == '__main__':
     for url in MasterURLs:
         df = df.append(
             {
-                'Title': utils.titleparser(url)
+                'id': len(df)
+                , 'Title': utils.titleparser(url)
                 , 'Distributor': utils.distributorparser(url)
                 , 'Genre': utils.genreparser(url)
                 , 'MPAARating': utils.mpaaratingparser(url)
@@ -44,4 +45,4 @@ if __name__ == '__main__':
             }, ignore_index=True
         )
         
-    df.to_csv(curpath + '/data/BoxOfficeMojoDataset.csv')
+    df.to_csv(curpath + '/data/BoxOfficeMojoDataset.csv',index=False)
