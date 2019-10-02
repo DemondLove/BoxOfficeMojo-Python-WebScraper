@@ -1,10 +1,21 @@
 # BoxOfficeMojo Python WebScraper Utility Package
 
-from bs4 import BeautifulSoup
 
+from bs4 import BeautifulSoup
 import requests
 
+
+
 def YearlyTop100sparser(url):
+    '''
+    Scrape a list of URLs for each Year listed in the home directory
+    
+    Parameters:
+    url (string): home url associated to all Top 100 Yearly films
+    
+    Returns:
+    YearlyTop100s (list): list of all urls associated to Top 100 Yearly films
+    '''
     page = requests.get(url)
     try:
         soup = downloadhtml(url)
@@ -30,6 +41,15 @@ def YearlyTop100sparser(url):
 
 
 def YearlyNonTop100sparser(url):
+    '''
+    Loop over YearlyTop100s and return another list of the footer URLs for each Year
+    
+    Parameters:
+    url (string): home url associated to all non-Top 100 Yearly films
+    
+    Returns:
+    YearlyNonTop100s (list): list of all urls associated to non-Top 100 Yearly films
+    '''
     YearlyTop100s = YearlyTop100sparser(url)
     YearlyNonTop100s = []
     for x in YearlyTop100s:
@@ -58,6 +78,15 @@ def YearlyNonTop100sparser(url):
 
 
 def AllYearlyURLsparser(url):
+    '''
+    Merge these two lists together (YearlyTop100s & YearlyNonTop100s), by year
+    
+    Parameters:
+    url (string): urls associated to all non-Top 100 Yearly films & Top 100 Yearly films
+    
+    Returns:
+    AllYearlyURLs (list): List of all urls within YearlyTop100s & YearlyNonTop100s
+    '''
     AllYearlyURLs = []
     YearlyTop100s = YearlyTop100sparser(url)
     YearlyNonTop100s = YearlyNonTop100sparser(url)
@@ -69,6 +98,15 @@ def AllYearlyURLsparser(url):
 
 
 def MasterURLsparser(url):
+    '''
+    Loop over every AllYearlyURLs entry, to merge all years together.
+    
+    Parameters:
+    url (string): Home Directory of BoxOfficeMojo film listings.
+    
+    Returns:
+    MasterURLs (list): list of all urls associated to films on BoxOfficeMojo.
+    '''
     MasterURLs = []
     AllYearlyURLs = AllYearlyURLsparser(url)
     for x in AllYearlyURLs:
@@ -127,6 +165,15 @@ def MasterURLsparser(url):
 
 
 def downloadhtml(url):
+    '''
+    Download the raw html of a given url on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    soup (string): html for a single film on BoxOfficeMojo.
+    '''
     try:
         page = requests.get(url)
         if 'Sorry, we\'re not able to process your request.' in BeautifulSoup(page.content, 'lxml').find('div', id='main').find('p'):
@@ -144,16 +191,43 @@ def downloadhtml(url):
 
 
 def uppertabledataparser(soup):
+    '''
+    Parse out the div/table at the top of each BoxOfficeMojo film page.
+    
+    Parameters:
+    soup (string): html for a single film on BoxOfficeMojo.
+    
+    Returns:
+    upper_table_data_rows (string): html for the div/table at the top of each BoxOfficeMojo film page.
+    '''
     upper_table_data_rows = soup.find('div', id='body').find('table', style='padding-top: 5px;').find('table', bgcolor='#dcdcdc').find_all('tr')
     return upper_table_data_rows
 
 
 def totallifetimegrossestableparser(soup):
+    '''
+    Parse out the total lifetime gross of a film on BoxOfficeMojo.
+    
+    Parameters:
+    soup (string): html for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): total lifetime gross of a film on BoxOfficeMojo.
+    '''
     total_lifetime_grosses_table = soup.find('div', id='body').find('table', style='padding-top: 5px;').find_next_sibling('table').find('table', width='100%').find('table', width='100%').find('table').find_all('td')
     return total_lifetime_grosses_table
 
 
 def titleparser(url):
+    '''
+    Parse out the title of a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): title of a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -177,6 +251,15 @@ def titleparser(url):
 
 
 def distributorparser(url):
+    '''
+    Parse out the distributor of a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): distributor of a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -221,6 +304,15 @@ def distributorparser(url):
 
 
 def genreparser(url):
+    '''
+    Parse out the genre of a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): genre of a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -266,6 +358,15 @@ def genreparser(url):
 
     
 def mpaaratingparser(url):
+    '''
+    Parse out the mpaa rating of a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): mpaa rating of a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -311,6 +412,15 @@ def mpaaratingparser(url):
 
             
 def productionbudgetparser(url):
+    '''
+    Parse out the production budget of a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): production budget of a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -356,6 +466,15 @@ def productionbudgetparser(url):
 
     
 def releasedateparser(url):
+    '''
+    Parse out the release date of a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): release date of a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -401,6 +520,15 @@ def releasedateparser(url):
     
     
 def runtimeparser(url):
+    '''
+    Parse out the runtime of a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): runtime of a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -462,6 +590,15 @@ def runtimeparser(url):
 
 
 def domesticparser(url):
+    '''
+    Parse out the domestic gross of the opening weekend release associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): domestic gross of the opening weekend release associated to a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -512,6 +649,15 @@ def domesticparser(url):
 
 
 def foreignparser(url):
+    '''
+    Parse out the foreign gross of the opening weekend release associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): foreign gross of the opening weekend release associated to a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -568,6 +714,15 @@ def foreignparser(url):
 
 
 def worldwideparser(url):
+    '''
+    Parse out the worldwide gross of the opening weekend release associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): worldwide gross of the opening weekend release associated to a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -627,6 +782,15 @@ def worldwideparser(url):
 
 
 def openingweekendgrossparser(url):
+    '''
+    Parse out the gross of the opening weekend release associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): gross of the opening weekend release associated to a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -685,6 +849,15 @@ def openingweekendgrossparser(url):
 
 
 def openingweekendtheatersparser(url):
+    '''
+    Parse out the theaters in the opening weekend release associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): theaters in the opening weekend release associated to a film on BoxOfficeMojo.
+    '''
     try:
         soup = downloadhtml(url)
         if soup is None:
@@ -753,6 +926,15 @@ def openingweekendtheatersparser(url):
 
 
 def widestreleaseparser(url):
+    '''
+    Parse out the theaters in the widest weekend release associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): theaters in the widest weekend release associated to a film on BoxOfficeMojo.
+    '''
     soup = downloadhtml(url)
     if soup is None:
         return 'NULL'
@@ -813,6 +995,15 @@ def widestreleaseparser(url):
 
 
 def directorparser(url):
+    '''
+    Parse out the list of directors associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): list of directors associated to a film on BoxOfficeMojo.
+    '''
     soup = downloadhtml(url)
     if soup is None:
         return 'NULL'
@@ -854,6 +1045,15 @@ def directorparser(url):
 
 
 def writerparser(url):
+    '''
+    Parse out the list of writers associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): list of writers associated to a film on BoxOfficeMojo.
+    '''
     soup = downloadhtml(url)
     if soup is None:
         return 'NULL'
@@ -895,6 +1095,15 @@ def writerparser(url):
 
 
 def actorparser(url):
+    '''
+    Parse out the list of actors associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): list of actors associated to a film on BoxOfficeMojo.
+    '''
     soup = downloadhtml(url)
     if soup is None:
         return 'NULL'
@@ -920,6 +1129,15 @@ def actorparser(url):
 
 
 def producerparser(url):
+    '''
+    Parse out the list of producer associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): list of producer associated to a film on BoxOfficeMojo.
+    '''
     soup = downloadhtml(url)
     if soup is None:
         return 'NULL'
@@ -945,6 +1163,15 @@ def producerparser(url):
 
 
 def composerparser(url):
+    '''
+    Parse out the list of composer associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): list of composer associated to a film on BoxOfficeMojo.
+    '''
     soup = downloadhtml(url)
     if soup is None:
         return 'NULL'
@@ -968,6 +1195,15 @@ def composerparser(url):
 
 
 def genresparser(url):
+    '''
+    Parse out the list of genres associated to a film on BoxOfficeMojo.
+    
+    Parameters:
+    url (string): url for a single film on BoxOfficeMojo.
+    
+    Returns:
+    li (string): list of genres associated to a film on BoxOfficeMojo.
+    '''
     soup = downloadhtml(url)
     if soup is None:
         return 'NULL'

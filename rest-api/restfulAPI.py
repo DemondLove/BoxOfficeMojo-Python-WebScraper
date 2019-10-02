@@ -23,9 +23,18 @@ conn = pymysql.connect(host=DB_HOST,
 @cherrypy.expose
 class restfulAPI(object):
     
-    # retrieve an existing resource
+    # 
     @cherrypy.tools.json_out()
     def GET(self, title):
+    '''
+    Retrieve an existing film from BoxOfficeMojo database.
+    
+    Parameters:
+    title (string): title for a single film on BoxOfficeMojo.
+    
+    Returns:
+    query (json): Title, Distributor, Genre, MPAARating, ProductionBudget, ReleaseDate, Runtime, DomesticGross, ForeignGross, WorldwideGross, OpeningWeekendGross, OpeningWeekendTheaters, WidestTheaters associated to the film.
+    '''
         try:
             query = pd.read_sql('''SELECT Title
                                 , Distributor
