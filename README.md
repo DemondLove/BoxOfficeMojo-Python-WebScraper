@@ -10,6 +10,7 @@ Web Scraping Package created to archive a BoxOfficeMojo database.
 3. Merge these two lists together (YearlyTop100s & YearlyNonTop100s), by year, called AllYearlyURLs.
 4. Loop over every AllYearlyURLs entry, to merge all years together, which will create the final list called MasterURLs.
 5. Loop over this MasterURLs list and append data onto a DataFrame, which will be exported to make up a BoxOfficeMojo database.
+6. Expose the results as a private RESTful API
 
 ## Key Information to Scrape for each film:
 - Title
