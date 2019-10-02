@@ -23,7 +23,6 @@ conn = pymysql.connect(host=DB_HOST,
 @cherrypy.expose
 class restfulAPI(object):
     
-    # 
     @cherrypy.tools.json_out()
     def GET(self, title):
     '''
