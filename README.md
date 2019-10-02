@@ -1,5 +1,7 @@
 # BoxOfficeMojo.com Python WebScraper
 
+***NOTE: NOT IN USE DUE TO BOXOFFICEMOJO'S CONDITIONS OF USE***
+
 Web Scraping Package created to archive a BoxOfficeMojo database.
 
 ## Using https://www.boxofficemojo.com/yearly/ as a Home Directory, the general approach is:
