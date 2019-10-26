@@ -1,6 +1,6 @@
 # BoxOfficeMojo.com Python WebScraper
 
-***NOTE: NOT IN USE DUE TO BOXOFFICEMOJO'S CONDITIONS OF USE***
+***NOTE: NOT IN USE DUE TO BOXOFFICEMOJO'S CONDITIONS OF USE AND BOXOFFICEMOJO.COM BY IMDbPro TRANSFER***
 
 Web Scraping Package created to archive a BoxOfficeMojo database.
 
