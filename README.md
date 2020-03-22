@@ -32,3 +32,9 @@ Web Scraping Package created to archive a BoxOfficeMojo database.
 - Producer
 - Composer
 - Genres
+
+## Upcoming Updates
+1. Refactor code base to become operational with newly redesigned website.
+2. Migrating from MySQL database to MongoDB.
+3. Refactoring to object-oriented design pattern.
+4. Implementing into Amazon Web Services, utilizing SQS message queue, Lambda, and EBS.
