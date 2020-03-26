@@ -32,3 +32,10 @@ Web Scraping Package created to archive a BoxOfficeMojo database.
 - Producer
 - Composer
 - Genres
+
+Next Steps:
+1. Refactor code base to properly pull from the new structure.
+2. Refactor code base to be object-oriented
+3. Restructure MySQL database to initially store data in a document-based approach, then as a relational approach.
+4. Consider utilizing MongoDB if I can do relational queries with each.
+5. Consider implementing into AWS w/ SQS, auto-scaling EC2s, Lambda, Airflow, RDS, and S3 for logs.
